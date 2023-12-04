@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Scoreboard</title>
+  <style>
+    /* Add your own styling here */
+  </style>
+</head>
+<body>
+  <h1>Live Scoreboard</h1>
+  <div id="scores-container"></div>
+
+  <script>
+    // Function to fetch live scores from ESPN (dummy function for demonstration)
+    async function fetchLiveScores() {
+      // You would typically use an API to get live scores from ESPN
+      // For simplicity, this is a dummy function that returns mock data
+      const mockData = [
+        { sport: 'Football', team1: 'Team A', score1: 14, team2: 'Team B', score2: 21 },
+        { sport: 'Basketball', team1: 'Team C', score1: 102, team2: 'Team D', score2: 98 },
+        // Add more sports and scores as needed
+      ];
+
+      return mockData;
+    }
+
+    // Function to update the scoreboard on the webpage
+    function updateScoreboard(scores) {
+      const scoresContainer = document.getElementById('scores-container');
+      scoresContainer.innerHTML = ''; // Clear previous content
+
+      scores.forEach(score => {
+        const scoreElement = document.createElement('div');
+        scoreElement.innerHTML = `<p>${score.sport}: ${score.team1} ${score.score1} - ${score.team2} ${score.score2}</p>`;
+        scoresContainer.appendChild(scoreElement);
+      });
+    }
+
+    // Function to continuously update scores every X seconds
+    async function autoUpdateScores() {
+      while (true) {
+        const liveScores = await fetchLiveScores();
+        updateScoreboard(liveScores);
+        await new Promise(resolve => setTimeout(resolve, 5000)); // Update every 5 seconds (adjust as needed)
+      }
+    }
+
+    // Start auto-updating scores when the page loads
+    autoUpdateScores();
+  </script>
+</body>
+</html>
